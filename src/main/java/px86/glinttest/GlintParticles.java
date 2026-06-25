@@ -37,30 +37,53 @@ public class GlintParticles {
 
     private static void spawnEnchantedSwirl(Player player) {
         Location loc = player.getLocation().add(0, 0.5, 0);
-        double time = System.currentTimeMillis() / 500.0;
+        double time = System.currentTimeMillis() / 400.0;
 
-        for (int i = 0; i < 8; i++) {
-            double angle = time + (i * Math.PI * 2 / 8);
-            double radius = 0.5;
+        Particle.DustOptions dust1 = new Particle.DustOptions(Color.fromRGB(170, 0, 255), 0.3f);
+        Particle.DustOptions dust2 = new Particle.DustOptions(Color.fromRGB(200, 100, 255), 0.25f);
+        Particle.DustOptions dust3 = new Particle.DustOptions(Color.fromRGB(120, 0, 200), 0.2f);
+
+        for (int i = 0; i < 16; i++) {
+            double angle = time + (i * Math.PI * 2 / 16);
+            double radius = 0.2;
             double x = Math.cos(angle) * radius;
             double z = Math.sin(angle) * radius;
-            double y = (i / 8.0) * 1.8;
+            double y = (i / 16.0) * 1.8;
 
             Location particleLoc = loc.clone().add(x, y, z);
-            Particle.DustOptions dust = new Particle.DustOptions(
-                    Color.fromRGB(170, 0, 255), 0.7f
-            );
-            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust);
+            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust1);
         }
 
-        for (int i = 0; i < 4; i++) {
-            double y = 0.3 + (random.nextDouble() * 1.5);
-            double angle = random.nextDouble() * Math.PI * 2;
-            double x = Math.cos(angle) * 0.3;
-            double z = Math.sin(angle) * 0.3;
+        for (int i = 0; i < 12; i++) {
+            double angle = (time * 1.3) + (i * Math.PI * 2 / 12);
+            double radius = 0.15;
+            double x = Math.cos(angle) * radius;
+            double z = Math.sin(angle) * radius;
+            double y = 0.2 + (i / 12.0) * 1.6;
 
             Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.SPELL_MOB, particleLoc, 1, 0.1, 0.1, 0.1, 0.5);
+            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust2);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            double angle = (time * 0.7) + (i * Math.PI * 2 / 10);
+            double radius = 0.1;
+            double x = Math.cos(angle) * radius;
+            double z = Math.sin(angle) * radius;
+            double y = 0.1 + (i / 10.0) * 1.9;
+
+            Location particleLoc = loc.clone().add(x, y, z);
+            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust3);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            double y = 0.3 + (random.nextDouble() * 1.4);
+            double angle = random.nextDouble() * Math.PI * 2;
+            double x = Math.cos(angle) * 0.08;
+            double z = Math.sin(angle) * 0.08;
+
+            Location particleLoc = loc.clone().add(x, y, z);
+            player.getWorld().spawnParticle(Particle.SPELL_MOB, particleLoc, 1, 0.01, 0.01, 0.01, 0.3);
         }
     }
 
