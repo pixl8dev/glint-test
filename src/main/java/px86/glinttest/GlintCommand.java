@@ -36,7 +36,7 @@ public class GlintCommand implements CommandExecutor {
         }
 
         if (args.length < 1) {
-            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Usage: /glintvariation <1-4>");
+            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Usage: /glintvariation <1-5>");
             player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Current variation: " + plugin.getVariation(player));
             return true;
         }
@@ -45,12 +45,12 @@ public class GlintCommand implements CommandExecutor {
         try {
             variation = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Please enter a number between 1 and 4.");
+            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Please enter a number between 1 and 5.");
             return true;
         }
 
-        if (variation < 1 || variation > 4) {
-            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Please enter a number between 1 and 4.");
+        if (variation < 1 || variation > 5) {
+            player.sendMessage(ChatColor.GOLD + "Glint " + ChatColor.GRAY + "| " + ChatColor.WHITE + "Please enter a number between 1 and 5.");
             return true;
         }
 
@@ -84,6 +84,7 @@ public class GlintCommand implements CommandExecutor {
             case 2 -> "Enchanted Swirl";
             case 3 -> "Soul Fire";
             case 4 -> "Star Burst";
+            case 5 -> "Smoke Trail";
             default -> "Unknown";
         };
     }

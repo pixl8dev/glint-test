@@ -20,6 +20,7 @@ public class GlintParticles {
             case 2 -> spawnEnchantedSwirl(player);
             case 3 -> spawnSoulFireGlint(player);
             case 4 -> spawnStarBurst(player);
+            case 5 -> spawnSmokeTrail(player);
         }
     }
 
@@ -136,6 +137,35 @@ public class GlintParticles {
 
             Location particleLoc = loc.clone().add(x, y, z);
             player.getWorld().spawnParticle(Particle.TOTEM, particleLoc, 1, 0.1, 0.1, 0.1, 0.5);
+        }
+    }
+
+    private static void spawnSmokeTrail(Player player) {
+        Location loc = player.getLocation();
+        Vector velocity = player.getVelocity();
+        double speed = Math.sqrt(velocity.getX() * velocity.getX() + velocity.getZ() * velocity.getZ());
+
+        float yaw = (float) Math.toRadians(loc.getYaw());
+        double behindX = -Math.sin(yaw) * 1.2;
+        double behindZ = Math.cos(yaw) * 1.2;
+
+        int count = speed > 0.05 ? 25 : 12;
+        double spread = speed > 0.05 ? 0.8 : 0.5;
+
+        for (int i = 0; i < count; i++) {
+            double x = behindX * (0.5 + random.nextDouble() * 0.5) + (random.nextDouble() - 0.5) * spread;
+            double y = random.nextDouble() * 2.2;
+            double z = behindZ * (0.5 + random.nextDouble() * 0.5) + (random.nextDouble() - 0.5) * spread;
+            Location particleLoc = loc.clone().add(x, y, z);
+            player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, particleLoc, 1, 0.01, 0.02, 0.01, 0.005);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            double x = behindX * 0.3 + (random.nextDouble() - 0.5) * 0.3;
+            double y = random.nextDouble() * 2.0;
+            double z = behindZ * 0.3 + (random.nextDouble() - 0.5) * 0.3;
+            Location particleLoc = loc.clone().add(x, y, z);
+            player.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, particleLoc, 1, 0.005, 0.03, 0.005, 0.005);
         }
     }
 }
