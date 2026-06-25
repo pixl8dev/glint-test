@@ -145,27 +145,27 @@ public class GlintParticles {
         Vector velocity = player.getVelocity();
         double speed = Math.sqrt(velocity.getX() * velocity.getX() + velocity.getZ() * velocity.getZ());
 
+        if (speed < 0.05) return;
+
         float yaw = (float) Math.toRadians(loc.getYaw());
-        double behindX = -Math.sin(yaw) * 1.2;
-        double behindZ = Math.cos(yaw) * 1.2;
+        double behindX = -Math.sin(yaw);
+        double behindZ = Math.cos(yaw);
 
-        int count = speed > 0.05 ? 25 : 12;
-        double spread = speed > 0.05 ? 0.8 : 0.5;
+        Particle.DustTransition dust1 = new Particle.DustTransition(
+                Color.fromRGB(100, 100, 100), Color.fromRGB(40, 40, 40), 0.25f
+        );
+        Particle.DustTransition dust2 = new Particle.DustTransition(
+                Color.fromRGB(140, 140, 140), Color.fromRGB(60, 60, 60), 0.2f
+        );
 
-        for (int i = 0; i < count; i++) {
-            double x = behindX * (0.5 + random.nextDouble() * 0.5) + (random.nextDouble() - 0.5) * spread;
+        for (int i = 0; i < 40; i++) {
+            double t = random.nextDouble();
+            double x = behindX * (0.3 + t * 1.5) + (random.nextDouble() - 0.5) * (0.2 + t * 0.8);
             double y = random.nextDouble() * 2.2;
-            double z = behindZ * (0.5 + random.nextDouble() * 0.5) + (random.nextDouble() - 0.5) * spread;
+            double z = behindZ * (0.3 + t * 1.5) + (random.nextDouble() - 0.5) * (0.2 + t * 0.8);
             Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, particleLoc, 1, 0.01, 0.02, 0.01, 0.005);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            double x = behindX * 0.3 + (random.nextDouble() - 0.5) * 0.3;
-            double y = random.nextDouble() * 2.0;
-            double z = behindZ * 0.3 + (random.nextDouble() - 0.5) * 0.3;
-            Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, particleLoc, 1, 0.005, 0.03, 0.005, 0.005);
+            player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, particleLoc, 1, 0, 0, 0, 0,
+                    random.nextBoolean() ? dust1 : dust2);
         }
     }
 }
