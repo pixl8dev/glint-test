@@ -2,8 +2,10 @@ package px86.glinttest;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -36,54 +38,56 @@ public class GlintParticles {
     }
 
     private static void spawnEnchantedSwirl(Player player) {
-        Location loc = player.getLocation().add(0, 0.5, 0);
         double time = System.currentTimeMillis() / 400.0;
 
-        Particle.DustOptions dust1 = new Particle.DustOptions(Color.fromRGB(170, 0, 255), 0.3f);
-        Particle.DustOptions dust2 = new Particle.DustOptions(Color.fromRGB(200, 100, 255), 0.25f);
-        Particle.DustOptions dust3 = new Particle.DustOptions(Color.fromRGB(120, 0, 200), 0.2f);
+        Particle.DustOptions dust1 = new Particle.DustOptions(Color.fromRGB(170, 0, 255), 0.25f);
+        Particle.DustOptions dust2 = new Particle.DustOptions(Color.fromRGB(200, 100, 255), 0.2f);
 
-        for (int i = 0; i < 16; i++) {
-            double angle = time + (i * Math.PI * 2 / 16);
-            double radius = 0.2;
-            double x = Math.cos(angle) * radius;
-            double z = Math.sin(angle) * radius;
-            double y = (i / 16.0) * 1.8;
+        double[][] armorSlots = {
+                {0.2, 1.8},   // boots
+                {0.3, 1.0},   // leggings
+                {0.35, 1.4},  // chestplate
+                {0.25, 1.75}  // helmet
+        };
 
-            Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust1);
-        }
+        Material[] armorTypes = {
+                Material.DIAMOND_BOOTS,
+                Material.DIAMOND_LEGGINGS,
+                Material.DIAMOND_CHESTPLATE,
+                Material.DIAMOND_HELMET
+        };
 
-        for (int i = 0; i < 12; i++) {
-            double angle = (time * 1.3) + (i * Math.PI * 2 / 12);
-            double radius = 0.15;
-            double x = Math.cos(angle) * radius;
-            double z = Math.sin(angle) * radius;
-            double y = 0.2 + (i / 12.0) * 1.6;
+        ItemStack[] equipped = {
+                player.getInventory().getBoots(),
+                player.getInventory().getLeggings(),
+                player.getInventory().getChestplate(),
+                player.getInventory().getHelmet()
+        };
 
-            Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust2);
-        }
+        for (int a = 0; a < 4; a++) {
+            if (equipped[a] == null || equipped[a].getType() != armorTypes[a]) continue;
 
-        for (int i = 0; i < 10; i++) {
-            double angle = (time * 0.7) + (i * Math.PI * 2 / 10);
-            double radius = 0.1;
-            double x = Math.cos(angle) * radius;
-            double z = Math.sin(angle) * radius;
-            double y = 0.1 + (i / 10.0) * 1.9;
+            Location base = player.getLocation().add(0, armorSlots[a][1], 0);
+            double radius = armorSlots[a][0];
 
-            Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust3);
-        }
+            for (int i = 0; i < 8; i++) {
+                double angle = time + (i * Math.PI * 2 / 8);
+                double x = Math.cos(angle) * radius;
+                double z = Math.sin(angle) * radius;
 
-        for (int i = 0; i < 6; i++) {
-            double y = 0.3 + (random.nextDouble() * 1.4);
-            double angle = random.nextDouble() * Math.PI * 2;
-            double x = Math.cos(angle) * 0.08;
-            double z = Math.sin(angle) * 0.08;
+                Location particleLoc = base.clone().add(x, 0, z);
+                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust1);
+            }
 
-            Location particleLoc = loc.clone().add(x, y, z);
-            player.getWorld().spawnParticle(Particle.SPELL_MOB, particleLoc, 1, 0.01, 0.01, 0.01, 0.3);
+            for (int i = 0; i < 6; i++) {
+                double angle = (time * 1.3) + (i * Math.PI * 2 / 6);
+                double r = radius * 0.6;
+                double x = Math.cos(angle) * r;
+                double z = Math.sin(angle) * r;
+
+                Location particleLoc = base.clone().add(x, 0, z);
+                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust2);
+            }
         }
     }
 
