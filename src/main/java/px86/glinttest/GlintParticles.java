@@ -40,9 +40,6 @@ public class GlintParticles {
     private static void spawnEnchantedSwirl(Player player) {
         double time = System.currentTimeMillis() / 500.0;
 
-        Particle.DustOptions dust1 = new Particle.DustOptions(Color.fromRGB(170, 0, 255), 0.3f);
-        Particle.DustOptions dust2 = new Particle.DustOptions(Color.fromRGB(200, 100, 255), 0.25f);
-
         double[][] armorSlots = {
                 {0.45, 0.2},   // boots
                 {0.4, 0.9},    // leggings
@@ -68,25 +65,22 @@ public class GlintParticles {
             if (equipped[a] == null || equipped[a].getType() != armorTypes[a]) continue;
 
             Location base = player.getLocation().add(0, armorSlots[a][1], 0);
-            double radius = armorSlots[a][0];
+            double maxRadius = armorSlots[a][0];
 
-            for (int i = 0; i < 24; i++) {
-                double angle = time + (i * Math.PI * 2 / 24);
+            for (int i = 0; i < 32; i++) {
+                double t = i / 32.0;
+                double angle = time + (t * Math.PI * 4);
+                double radius = t * maxRadius;
                 double x = Math.cos(angle) * radius;
                 double z = Math.sin(angle) * radius;
 
-                Location particleLoc = base.clone().add(x, 0, z);
-                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust1);
-            }
-
-            for (int i = 0; i < 16; i++) {
-                double angle = (time * 1.3) + (i * Math.PI * 2 / 16);
-                double r = radius * 0.55;
-                double x = Math.cos(angle) * r;
-                double z = Math.sin(angle) * r;
+                float size = (float) (0.35 * (1.0 - t * 0.7));
+                Particle.DustOptions dust = new Particle.DustOptions(
+                        Color.fromRGB(170, 0, 255), size
+                );
 
                 Location particleLoc = base.clone().add(x, 0, z);
-                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust2);
+                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust);
             }
         }
     }
