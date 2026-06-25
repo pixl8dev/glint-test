@@ -73,13 +73,14 @@ public class GlintParticles {
                 double radius = t * maxRadius;
                 double x = Math.cos(angle) * radius;
                 double z = Math.sin(angle) * radius;
+                double y = t * 0.4 - 0.2;
 
                 float size = (float) (0.35 * (1.0 - t * 0.7));
                 Particle.DustOptions dust = new Particle.DustOptions(
                         Color.fromRGB(170, 0, 255), size
                 );
 
-                Location particleLoc = base.clone().add(x, 0, z);
+                Location particleLoc = base.clone().add(x, y, z);
                 player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust);
             }
         }
