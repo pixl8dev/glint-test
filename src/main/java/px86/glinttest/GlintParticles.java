@@ -61,27 +61,30 @@ public class GlintParticles {
                 player.getInventory().getHelmet()
         };
 
+        Particle.DustTransition fromPurple = new Particle.DustTransition(
+                Color.fromRGB(170, 0, 255), Color.fromRGB(60, 0, 100), 0.35f
+        );
+        Particle.DustTransition toPurple = new Particle.DustTransition(
+                Color.fromRGB(200, 100, 255), Color.fromRGB(80, 0, 120), 0.3f
+        );
+
         for (int a = 0; a < 4; a++) {
             if (equipped[a] == null || equipped[a].getType() != armorTypes[a]) continue;
 
             Location base = player.getLocation().add(0, armorSlots[a][1], 0);
             double maxRadius = armorSlots[a][0];
 
-            for (int i = 0; i < 48; i++) {
-                double t = i / 48.0;
+            for (int i = 0; i < 36; i++) {
+                double t = i / 36.0;
                 double angle = time + (t * Math.PI * 3);
                 double radius = t * maxRadius;
                 double x = Math.cos(angle) * radius;
                 double z = Math.sin(angle) * radius;
                 double y = t * 0.3 - 0.15;
 
-                float size = (float) (0.3 * (1.0 - t * 0.8));
-                Particle.DustOptions dust = new Particle.DustOptions(
-                        Color.fromRGB(170, 0, 255), size
-                );
-
                 Location particleLoc = base.clone().add(x, y, z);
-                player.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, 0, 0, 0, 0, dust);
+                player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, particleLoc, 1, 0, 0, 0, 0,
+                        i % 2 == 0 ? fromPurple : toPurple);
             }
         }
     }
