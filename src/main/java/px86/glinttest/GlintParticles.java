@@ -41,10 +41,10 @@ public class GlintParticles {
         double time = System.currentTimeMillis() / 500.0;
 
         double[][] armorSlots = {
-                {0.45, 0.2},   // boots
-                {0.4, 0.9},    // leggings
-                {0.5, 1.35},   // chestplate
-                {0.35, 1.75}   // helmet
+                {0.6, 0.2},   // boots
+                {0.55, 0.9},  // leggings
+                {0.65, 1.35}, // chestplate
+                {0.5, 1.75}   // helmet
         };
 
         Material[] armorTypes = {
@@ -62,10 +62,10 @@ public class GlintParticles {
         };
 
         Particle.DustTransition fromPurple = new Particle.DustTransition(
-                Color.fromRGB(170, 0, 255), Color.fromRGB(60, 0, 100), 0.35f
+                Color.fromRGB(170, 0, 255), Color.fromRGB(60, 0, 100), 0.55f
         );
         Particle.DustTransition toPurple = new Particle.DustTransition(
-                Color.fromRGB(200, 100, 255), Color.fromRGB(80, 0, 120), 0.3f
+                Color.fromRGB(200, 100, 255), Color.fromRGB(80, 0, 120), 0.45f
         );
 
         for (int a = 0; a < 4; a++) {
