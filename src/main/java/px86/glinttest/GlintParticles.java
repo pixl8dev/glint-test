@@ -145,17 +145,17 @@ public class GlintParticles {
         Vector velocity = player.getVelocity();
         double speed = Math.sqrt(velocity.getX() * velocity.getX() + velocity.getZ() * velocity.getZ());
 
-        if (speed < 0.05) return;
+        if (speed < 0.01) return;
 
         float yaw = (float) Math.toRadians(loc.getYaw());
         double behindX = -Math.sin(yaw);
         double behindZ = Math.cos(yaw);
 
         Particle.DustTransition dust1 = new Particle.DustTransition(
-                Color.fromRGB(100, 100, 100), Color.fromRGB(40, 40, 40), 0.25f
+                Color.fromRGB(180, 180, 180), Color.fromRGB(80, 80, 80), 0.35f
         );
         Particle.DustTransition dust2 = new Particle.DustTransition(
-                Color.fromRGB(140, 140, 140), Color.fromRGB(60, 60, 60), 0.2f
+                Color.fromRGB(220, 220, 220), Color.fromRGB(100, 100, 100), 0.3f
         );
 
         for (int i = 0; i < 40; i++) {
