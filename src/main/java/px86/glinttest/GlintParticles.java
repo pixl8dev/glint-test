@@ -67,15 +67,15 @@ public class GlintParticles {
             Location base = player.getLocation().add(0, armorSlots[a][1], 0);
             double maxRadius = armorSlots[a][0];
 
-            for (int i = 0; i < 32; i++) {
-                double t = i / 32.0;
-                double angle = time + (t * Math.PI * 4);
+            for (int i = 0; i < 48; i++) {
+                double t = i / 48.0;
+                double angle = time + (t * Math.PI * 3);
                 double radius = t * maxRadius;
                 double x = Math.cos(angle) * radius;
                 double z = Math.sin(angle) * radius;
-                double y = t * 0.4 - 0.2;
+                double y = t * 0.3 - 0.15;
 
-                float size = (float) (0.35 * (1.0 - t * 0.7));
+                float size = (float) (0.3 * (1.0 - t * 0.8));
                 Particle.DustOptions dust = new Particle.DustOptions(
                         Color.fromRGB(170, 0, 255), size
                 );
