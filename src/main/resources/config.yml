@@ -1,0 +1,9 @@
+# GlintTest Configuration
+# Default particle variation (1-4)
+default-variation: 1
+
+# Particle spawn interval in ticks (20 ticks = 1 second)
+spawn-interval: 2
+
+# Whether the effect is enabled by default
+enabled: true
